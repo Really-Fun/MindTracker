@@ -1,12 +1,12 @@
 from django.shortcuts import render
-from django.views.generic import CreateView, TemplateView
+from django.views.generic import CreateView, TemplateView, DeleteView
 
 from UserTracker.models import DailyLog
 
 
 # Create your views here.
 class DailyCheckUp(CreateView):
-    template_name = "daily_check_up.html"
+    template_name = "UserTracker/daily_check_up.html"
     model = DailyLog
     fields = ["mood", "took_magnesium", "notes"]
 
@@ -18,8 +18,9 @@ class DailyCheckUp(CreateView):
 
 
 class IndexView(TemplateView):
-    template_name = "index.html"
+    template_name = "UserTracker/index.html"
+    model = DailyLog
 
 
 class MainPageView(TemplateView):
-    template_name = "main_page.html"
+    template_name = "UserTracker/main_page.html"
