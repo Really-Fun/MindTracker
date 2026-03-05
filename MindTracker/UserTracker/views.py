@@ -1,5 +1,8 @@
 from django.shortcuts import render
 from django.views.generic import CreateView, TemplateView, DeleteView
+from django.contrib.auth.views import LoginView
+from django.contrib.auth.forms import AuthenticationForm
+from django.urls import reverse_lazy
 
 from UserTracker.models import DailyLog
 
@@ -10,7 +13,7 @@ class DailyCheckUp(CreateView):
     model = DailyLog
     fields = ["mood", "took_magnesium", "notes"]
 
-    success_url = "apply-changes"
+    success_url = "index"
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -24,3 +27,12 @@ class IndexView(TemplateView):
 
 class MainPageView(TemplateView):
     template_name = "UserTracker/main_page.html"
+
+
+class LoginUserView(LoginView):
+    form_class = AuthenticationForm
+    template_name = "UserTracker/login.html"
+    extra_context = {"title": "Авторизация"}
+
+    def get_success_url(self):
+        return reverse_lazy("index")
