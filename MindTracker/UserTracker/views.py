@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import CreateView, TemplateView, DeleteView
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.forms import AuthenticationForm
 from django.urls import reverse_lazy
 
@@ -36,3 +36,9 @@ class LoginUserView(LoginView):
 
     def get_success_url(self):
         return reverse_lazy("index")
+
+
+class LogoutUserView(LogoutView):
+
+    def get_success_url(self):
+        return reverse_lazy("home")
