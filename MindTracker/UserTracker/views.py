@@ -5,6 +5,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.urls import reverse_lazy
 
 from UserTracker.models import DailyLog
+from UserTracker.forms import RegistrationUserForm
 
 
 # Create your views here.
@@ -42,3 +43,9 @@ class LogoutUserView(LogoutView):
 
     def get_success_url(self):
         return reverse_lazy("home")
+
+
+class RegisterUserView(CreateView):
+    form_class = RegistrationUserForm
+    template_name = "UserTracker/register.html"
+    success_url = reverse_lazy("index/")  # Куда кинуть после успеха
