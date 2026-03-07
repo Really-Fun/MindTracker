@@ -8,5 +8,6 @@ urlpatterns = [
     path("commit/", views.DailyCheckUp.as_view(), name="daily-checkup"),
     path("login/", views.LoginUserView.as_view(), name="login"),
     path("register/", views.RegisterUserView.as_view(), name="register"),
+    path("logout/", views.LoginUserView.as_view(), name="logout"),
     path("", views.MainPageView.as_view(), name="home"),
 ]
