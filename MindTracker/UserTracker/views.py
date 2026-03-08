@@ -14,7 +14,8 @@ class DailyCheckUp(CreateView):
     model = DailyLog
     fields = ["mood", "took_magnesium", "notes"]
 
-    success_url = "index"
+    def get_success_url(self):
+        return reverse_lazy("stats")
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -36,7 +37,7 @@ class LoginUserView(LoginView):
     extra_context = {"title": "Авторизация"}
 
     def get_success_url(self):
-        return reverse_lazy("index")
+        return reverse_lazy("stats")
 
 
 class LogoutUserView(LogoutView):
@@ -48,4 +49,4 @@ class LogoutUserView(LogoutView):
 class RegisterUserView(CreateView):
     form_class = RegistrationUserForm
     template_name = "UserTracker/register.html"
-    success_url = reverse_lazy("index/")  # Куда кинуть после успеха
+    success_url = reverse_lazy("stats/")
