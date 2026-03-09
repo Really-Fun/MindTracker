@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Commit: {{ object.slug }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <style>
+        body {
+            background-color: #0f0f10;
+            color: #e0e0e0;
+            font-family: 'Inter', -apple-system, sans-serif;
+            padding-top: 50px;
+        }
+        .commit-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .commit-header {
+            background-color: #1c1c1e;
+            border: 1px solid #3a3a3c;
+            border-radius: 8px 8px 0 0;
+            padding: 1.5rem;
+            border-bottom: none;
+        }
+        .commit-body {
+            background-color: #1c1c1e;
+            border: 1px solid #3a3a3c;
+            border-radius: 0 0 8px 8px;
+            padding: 2rem;
+        }
+        .hash-code {
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+            background-color: #2c2c2e;
+            color: #007bff;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+        .stat-badge {
+            background-color: #2c2c2e;
+            border: 1px solid #3a3a3c;
+            padding: 10px 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        .mood-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #007bff;
+        }
+        .notes-area {
+            background-color: #0f0f10;
+            border-left: 4px solid #007bff;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            font-style: italic;
+            color: #a1a1a6;
+        }
+        .btn-back {
+            color: #a1a1a6;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+        .btn-back:hover { color: #fff; }
+        
+        /* Индикатор магния */
+        .status-pill {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .status-success { background-color: rgba(40, 167, 69, 0.2); color: #28a745; border: 1px solid #28a745; }
+        .status-fail { background-color: rgba(220, 53, 69, 0.2); color: #dc3545; border: 1px solid #dc3545; }
+    </style>
+</head>
+<body>
+
+<div class="container commit-container">
+    <div class="mb-4">
+        <a href="{% url 'stats' %}" class="btn-back">
+            <i class="bi bi-arrow-left"></i> Назад к статистике
+        </a>
+    </div>
+
+    <div class="commit-header d-flex justify-content-between align-items-center">
+        <div>
+            <span class="text-muted">Commit:</span>
+            <span class="hash-code">{{ object.slug }}</span>
+        </div>
+        <div class="text-muted small">
+            <i class="bi bi-calendar3"></i> {{ object.date|date:"d E Y" }}
+        </div>
+    </div>
+
+    <div class="commit-body">
+        <div class="row g-4 text-center">
+            <div class="col-md-4">
+                <div class="stat-badge">
+                    <div class="small text-muted mb-1">Mood Score</div>
+                    <div class="mood-value">{{ object.mood }}<span style="font-size: 1rem; color: #555;">/10</span></div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-badge">
+                    <div class="small text-muted mb-2">Magnesium</div>
+                    {% if object.took_magnesium %}
+                        <span class="status-pill status-success"><i class="bi bi-check-circle-fill"></i> DEPLOYED</span>
+                    {% else %}
+                        <span class="status-pill status-fail"><i class="bi bi-x-circle-fill"></i> MISSING</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-badge">
+                    <div class="small text-muted mb-1">Author</div>
+                    <div class="mt-1" style="font-weight: 500;">{{ object.user.username }}</div>
+                </div>
+            </div>
+        </div>
+
+        {% if object.notes %}
+        <div class="notes-area">
+            <div class="small text-uppercase mb-2" style="letter-spacing: 1px; color: #007bff;">Message:</div>
+            "{{ object.notes }}"
+        </div>
+        {% else %}
+        <div class="mt-5 text-center text-muted">
+            <small>No additional notes for this commit.</small>
+        </div>
+        {% endif %}
+
+        <div class="mt-5 pt-4 border-top border-secondary d-flex justify-content-between align-items-center">
+            <div class="small text-muted">
+                Status: <span class="text-success">Verified</span>
+            </div>
+            <button class="btn btn-sm btn-outline-secondary" onclick="window.print()">
+                <i class="bi bi-printer"></i> Экспорт
+            </button>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

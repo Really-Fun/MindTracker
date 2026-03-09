@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import CreateView, TemplateView, DeleteView
+from django.views.generic import CreateView, TemplateView, ListView, DetailView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.forms import AuthenticationForm
 from django.urls import reverse_lazy
@@ -22,7 +22,15 @@ class DailyCheckUp(CreateView):
         return super().form_valid(form)
 
 
-class IndexView(TemplateView):
+class CommitView(DetailView):
+    template_name = "UserTracker/commit_detail.html"
+    model = DailyLog
+    slug_url_kwarg = "hash_slug"
+    slug_field = "slug"
+    context_object_name = "commit"
+
+
+class IndexView(ListView):
     template_name = "UserTracker/index.html"
     model = DailyLog
 
