@@ -1,8 +1,12 @@
+from datetime import date, timedelta
+
 from django.shortcuts import render
 from django.views.generic import CreateView, TemplateView, ListView, DetailView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.forms import AuthenticationForm
 from django.urls import reverse_lazy
+
+from django.db.models import Avg
 
 from UserTracker.models import DailyLog
 from UserTracker.forms import RegistrationUserForm
@@ -33,6 +37,41 @@ class CommitView(DetailView):
 class IndexView(ListView):
     template_name = "UserTracker/index.html"
     model = DailyLog
+
+    extra_context = {
+        "title": "Stats | Mind Tracker",
+    }
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user_logs = DailyLog.objects.filter(user=self.request.user).order_by("-date")
+
+        streak = 0
+        if user_logs.exists():
+            today = date.today()
+
+            last_log = user_logs[0].date
+            expected_date = today
+            count = 0
+
+            for log in user_logs[1:]:
+                if log.date == expected_date:
+                    if count == 0:
+                        count = 1
+                    continue
+                elif log.date == (expected_date - timedelta(days=1)):
+                    count += 1
+                else:
+                    break
+
+        magnesium_count = user_logs.filter(took_magnesium=True).count()
+        magnesium_percent = int((magnesium_count / len(user_logs)) * 100)
+
+        context["days_in_row"] = count
+        context["average_mood"] = user_logs.aggregate(Avg("mood"))["mood__avg"]
+        context["magnesium_in_percent"] = magnesium_percent
+
+        return context
 
 
 class MainPageView(TemplateView):

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apollo Recovery | Dashboard</title>
+    <title>{{ title }}</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { background-color: #0f172a; color: #f8fafc; font-family: 'Inter', sans-serif; }
@@ -22,22 +22,22 @@
 
     <main class="flex-grow p-6 md:p-12 max-w-4xl mx-auto w-full">
         <section class="mb-10">
-            <h2 class="text-4xl font-extrabold mb-2">Привет, бро! 👋</h2>
-            <p class="text-slate-400 text-lg">Как твоя спина сегодня? Время обновить статус.</p>
+            <h2 class="text-4xl font-extrabold mb-2">Привет, {{user.username}}! 👋</h2>
+            <p class="text-slate-400 text-lg">Как твоё настроение сегодня?</p>
         </section>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
             <div class="glass p-6 rounded-3xl text-center">
                 <p class="text-slate-500 text-xs uppercase mb-1">Дней в строю</p>
-                <p class="text-3xl font-bold text-blue-400">12</p>
+                <p class="text-3xl font-bold text-blue-400">{{days_in_row}}</p>
             </div>
             <div class="glass p-6 rounded-3xl text-center border-l-4 border-l-purple-500">
                 <p class="text-slate-500 text-xs uppercase mb-1">Ср. настроение</p>
-                <p class="text-3xl font-bold text-purple-400">7.4</p>
+                <p class="text-3xl font-bold text-purple-400">{{average_mood|floatformat:2}}</p>
             </div>
             <div class="glass p-6 rounded-3xl text-center">
                 <p class="text-slate-500 text-xs uppercase mb-1">Магний</p>
-                <p class="text-3xl font-bold text-green-400">80%</p>
+                <p class="text-3xl font-bold text-green-400">{{magnesium_in_percent}}%</p>
             </div>
         </div>
 
@@ -54,20 +54,23 @@
             </h3>
 
             {% for commit in object_list %}
-                <div class="space-y-4" id="log-list">
-                    <div class="glass p-5 rounded-2xl flex justify-between items-center">
-                        <div>
-                            <p class="font-medium">{{ commit.date }}</p>
-                            <p class="text-sm text-slate-500 italic">{{ commit.notes }}</p>
+                <div class="space-y-4 mb-4"> <a href="{% url 'commit' commit.slug %}" class="block transform transition-all hover:-translate-y-1 hover:scale-[1.01] active:scale-95">
+                        <div class="glass p-5 rounded-2xl flex justify-between items-center hover:border-blue-500/50 hover:shadow-lg hover:shadow-blue-500/10 transition-all">
+                            <div>
+                                <p class="font-medium text-slate-200">{{ commit.date }}</p>
+                                <p class="text-sm text-slate-500 italic truncate max-w-[200px] md:max-w-md">
+                                    {{ commit.notes|default:"No message for this commit" }}
+                                </p>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-blue-400 font-bold">{{ commit.mood }}/10</span>
+                                <p class="text-[10px] text-slate-600 uppercase tracking-wider">Mood score</p>
+                            </div>
                         </div>
-                        <div class="text-right">
-                            <span class="text-blue-400 font-bold">{{commit.mood}}/10</span>
-                            <p class="text-[10px] text-slate-600">Mood score</p>
-                        </div>
-                    </div>
+                    </a>
                 </div>
             {% empty %}
-                <li>No articles yet.</li>
+                <p class="text-slate-500 text-center py-10">Пока нет ни одного коммита. Самое время сделать первый!</p>
             {% endfor %}
         </section>
     </main>
