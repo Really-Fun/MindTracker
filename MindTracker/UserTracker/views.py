@@ -49,4 +49,4 @@ class LogoutUserView(LogoutView):
 class RegisterUserView(CreateView):
     form_class = RegistrationUserForm
     template_name = "UserTracker/register.html"
-    success_url = reverse_lazy("stats/")
+    success_url = reverse_lazy("stats")
