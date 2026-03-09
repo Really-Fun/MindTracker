@@ -1,0 +1,64 @@
+/* Эффект матового стекла для навбара */
+.navbar-glass {
+    background-color: rgba(2, 6, 23, 0.85); /* Цвет фона #020617 с прозрачностью */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: all 0.3s ease;
+}
+
+/* Стили для блока с аватаркой */
+.avatar-container {
+    display: block;
+    width: 2.5rem; /* 40px */
+    height: 2.5rem;
+    border-radius: 9999px;
+    overflow: hidden;
+    border: 2px solid #334155; /* slate-700 */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.avatar-container:hover {
+    border-color: #3b82f6; /* blue-500 */
+    box-shadow: 0 4px 14px rgba(59, 130, 246, 0.25);
+}
+
+.avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.avatar-placeholder {
+    width: 100%;
+    height: 100%;
+    background-color: #1e293b; /* slate-800 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #3b82f6; /* blue-500 */
+    font-weight: 700;
+    font-size: 1.125rem;
+    text-transform: uppercase;
+}
+
+/* Кнопка выхода */
+.logout-btn {
+    color: #64748b; /* slate-500 */
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    transition: color 0.2s ease;
+}
+
+.logout-btn:hover {
+    color: #f87171; /* red-400 */
+}
+
+/* Выпадающее мобильное меню */
+.mobile-menu {
+    background-color: rgba(2, 6, 23, 0.95);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid #1e293b;
+    padding: 1rem 1.5rem;
+}

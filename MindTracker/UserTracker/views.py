@@ -3,6 +3,7 @@ from datetime import date, timedelta
 from django.shortcuts import render
 from django.views.generic import CreateView, TemplateView, ListView, DetailView
 from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import AuthenticationForm
 from django.urls import reverse_lazy
 
@@ -13,7 +14,7 @@ from UserTracker.forms import RegistrationUserForm
 
 
 # Create your views here.
-class DailyCheckUp(CreateView):
+class DailyCheckUp(LoginRequiredMixin, CreateView):
     template_name = "UserTracker/daily_check_up.html"
     model = DailyLog
     fields = ["mood", "took_magnesium", "notes"]
@@ -26,7 +27,7 @@ class DailyCheckUp(CreateView):
         return super().form_valid(form)
 
 
-class CommitView(DetailView):
+class CommitView(LoginRequiredMixin, DetailView):
     template_name = "UserTracker/commit_detail.html"
     model = DailyLog
     slug_url_kwarg = "hash_slug"
@@ -34,26 +35,29 @@ class CommitView(DetailView):
     context_object_name = "commit"
 
 
-class IndexView(ListView):
+class IndexView(LoginRequiredMixin, ListView):
     template_name = "UserTracker/index.html"
     model = DailyLog
+    paginate_by = 10
 
     extra_context = {
         "title": "Stats | Mind Tracker",
     }
+
+    def get_queryset(self):
+        return DailyLog.objects.filter(user=self.request.user).order_by("-date")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user_logs = DailyLog.objects.filter(user=self.request.user).order_by("-date")
 
         streak = 0
+        count = 0
         if user_logs.exists():
             today = date.today()
 
             last_log = user_logs[0].date
             expected_date = today
-            count = 0
-
             for log in user_logs[1:]:
                 if log.date == expected_date:
                     if count == 0:
@@ -65,7 +69,10 @@ class IndexView(ListView):
                     break
 
         magnesium_count = user_logs.filter(took_magnesium=True).count()
-        magnesium_percent = int((magnesium_count / len(user_logs)) * 100)
+        if user_logs:
+            magnesium_percent = int((magnesium_count / len(user_logs)) * 100)
+        else:
+            magnesium_percent = 0
 
         context["days_in_row"] = count
         context["average_mood"] = user_logs.aggregate(Avg("mood"))["mood__avg"]
@@ -96,4 +103,6 @@ class LogoutUserView(LogoutView):
 class RegisterUserView(CreateView):
     form_class = RegistrationUserForm
     template_name = "UserTracker/register.html"
-    success_url = reverse_lazy("stats")
+
+    def get_success_url(self):
+        return reverse_lazy("stats")

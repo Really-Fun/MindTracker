@@ -24,6 +24,7 @@ class RegistrationUserForm(UserCreationForm):
             "last_name",
             "password1",
             "password2",
+            "avatar",
         ]
         labels = {
             "email": "E-mail",

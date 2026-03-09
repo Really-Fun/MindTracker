@@ -12,13 +12,13 @@
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
-
-    <nav class="p-6 flex justify-between items-center glass sticky top-0 z-50">
+    {% include 'navbar.html' %}
+    {% comment %} <nav class="p-6 flex justify-between items-center glass sticky top-0 z-50">
         <div class="text-xl font-bold gradient-text">Mind Tracker</div>
         <div class="flex gap-4">
             <span class="text-sm text-slate-400">Привет, {{ user.username }}</span>
         </div>
-    </nav>
+    </nav> {% endcomment %}
 
     <main class="flex-grow p-6 md:p-12 max-w-4xl mx-auto w-full">
         <section class="mb-10">
@@ -72,6 +72,29 @@
             {% empty %}
                 <p class="text-slate-500 text-center py-10">Пока нет ни одного коммита. Самое время сделать первый!</p>
             {% endfor %}
+            {% if is_paginated %}
+            <div class="flex justify-center items-center gap-4 mt-8">
+                
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}" class="glass px-4 py-2 rounded-xl text-sm text-slate-300 hover:text-white hover:border-blue-500 transition-all">
+                        &larr; Предыдущая
+                    </a>
+                {% else %}
+                {% endif %}
+
+                <span class="text-slate-400 text-sm font-medium">
+                    Стр. <span class="text-blue-400">{{ page_obj.number }}</span> из {{ page_obj.paginator.num_pages }}
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}" class="glass px-4 py-2 rounded-xl text-sm text-slate-300 hover:text-white hover:border-blue-500 transition-all">
+                        Следующая &rarr;
+                    </a>
+                {% else %}
+                {% endif %}
+
+            </div>
+            {% endif %}
         </section>
     </main>
 
