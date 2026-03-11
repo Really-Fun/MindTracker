@@ -28,14 +28,16 @@ class DailyLog(models.Model):
         to=User,
         on_delete=models.CASCADE,
         related_name="logs",
-        verbose_name="ДневнойЛог",
+        verbose_name="Дневной Лог",
     )
-    date = models.DateField(verbose_name="Дата", auto_now_add=True)
-    mood = models.PositiveSmallIntegerField(choices=MOOD_CHOICES, default=5)
+    date = models.DateField(verbose_name="Дата коммита", auto_now_add=True)
+    mood = models.PositiveSmallIntegerField(
+        choices=MOOD_CHOICES, default=5, verbose_name="Настроение"
+    )
     took_magnesium = models.BooleanField(verbose_name="Приём Магния")
     notes = models.CharField(verbose_name="Заметки", null=True, blank=True)
     slug = models.SlugField(
-        verbose_name="hash_commit", max_length=255, unique=True, editable=False
+        verbose_name="Хэш коммита", max_length=255, unique=True, editable=False
     )
 
     def save(self, *args, **kwargs):
