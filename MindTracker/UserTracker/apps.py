@@ -2,4 +2,5 @@ from django.apps import AppConfig
 
 
 class UsertrackerConfig(AppConfig):
-    name = 'UserTracker'
+    name = "UserTracker"
+    verbose_name = "Пользователи и их коммиты"

@@ -16,6 +16,10 @@ class User(AbstractUser):
         null=True,
     )
 
+    class Meta:
+        verbose_name = "Пользователи"
+        verbose_name_plural = "Пользователи"
+
 
 class DailyLog(models.Model):
     MOOD_CHOICES = [(i, str(i)) for i in range(1, 11)]
@@ -40,3 +44,7 @@ class DailyLog(models.Model):
             self.slug = hashlib.sha1(salt.encode()).hexdigest()[:12]
 
         super().save(*args, **kwargs)
+
+    class Meta:
+        verbose_name = "Дневные коммиты"
+        verbose_name_plural = "Дневные коммиты"
