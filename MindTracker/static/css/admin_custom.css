@@ -1,0 +1,135 @@
+:root {
+    --primary: #3b82f6;
+    --secondary: #1e293b;
+    --accent: #8b5cf6;
+    --body-fg: #f8fafc;
+    --body-quiet-color: #94a3b8;
+
+    --body-bg: transparent;
+    --header-bg: transparent;
+    --module-bg: transparent;
+    --breadcrumbs-bg: transparent;
+}
+
+body {
+    background-color: #020617;
+    background-image:
+        radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.15), transparent 50%),
+        radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.15), transparent 50%);
+    background-attachment: fixed;
+    color: var(--body-fg);
+    font-family: 'Inter', system-ui, sans-serif;
+}
+
+#header {
+    background: rgba(2, 6, 23, 0.6) !important;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 15px 20px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+
+#site-name a {
+    font-weight: 900;
+    font-size: 1.5rem;
+    letter-spacing: -0.05em;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+#site-name a span {
+    -webkit-text-fill-color: transparent;
+}
+
+.module,
+#changelist,
+.login .form-row {
+    background: rgba(30, 41, 59, 0.35) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+
+    position: relative;
+    overflow: hidden;
+}
+
+.module::before,
+#changelist::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: inherit;
+    background: radial-gradient(600px circle at var(--mouse-x, -500px) var(--mouse-y, -500px),
+            rgba(139, 92, 246, 0.15),
+            transparent 40%);
+    z-index: -1;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    opacity: 0;
+}
+
+.module:hover::before,
+#changelist:hover::before {
+    opacity: 1;
+}
+
+.module h2,
+.module caption,
+.inline-group h2 {
+    background: rgba(2, 6, 23, 0.6) !important;
+    padding: 12px 15px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.button,
+input[type=submit],
+input[type=button],
+.submit-row input,
+a.button {
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6) !important;
+    border-radius: 8px;
+    border: none !important;
+    color: #fff !important;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    padding: 10px 20px;
+}
+
+.button:hover,
+input[type=submit]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+}
+
+
+input[type=text],
+input[type=password],
+input[type=email],
+input[type=url],
+input[type=number],
+select,
+textarea {
+    background: rgba(2, 6, 23, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #f8fafc;
+    border-radius: 6px;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--primary);
+    outline: none;
+}
