@@ -1,64 +1,221 @@
-/* Эффект матового стекла для навбара */
-.navbar-glass {
-    background-color: rgba(2, 6, 23, 0.85); /* Цвет фона #020617 с прозрачностью */
+:root {
+    --bg-color: #0d1117;
+    /* Темный цвет в стиле GitHub */
+    --surface-color: rgba(22, 27, 34, 0.7);
+    --text-primary: #c9d1d9;
+    --text-secondary: #8b949e;
+    --accent-color: #238636;
+    /* Зеленый "коммит" */
+    --accent-hover: #2ea043;
+    --glow-color: rgba(46, 160, 67, 0.2);
+    --font-main: 'Inter', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    font-family: var(--font-main);
+    overflow-x: hidden;
+}
+
+/* --- NAVBAR (Glassmorphism) --- */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: var(--surface-color);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    transition: all 0.3s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    z-index: 1000;
 }
 
-/* Стили для блока с аватаркой */
-.avatar-container {
-    display: block;
-    width: 2.5rem; /* 40px */
-    height: 2.5rem;
-    border-radius: 9999px;
-    overflow: hidden;
-    border: 2px solid #334155; /* slate-700 */
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.avatar-container:hover {
-    border-color: #3b82f6; /* blue-500 */
-    box-shadow: 0 4px 14px rgba(59, 130, 246, 0.25);
-}
-
-.avatar-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.avatar-placeholder {
-    width: 100%;
-    height: 100%;
-    background-color: #1e293b; /* slate-800 */
+.nav-logo {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #fff;
+    text-decoration: none;
     display: flex;
     align-items: center;
-    justify-content: center;
-    color: #3b82f6; /* blue-500 */
-    font-weight: 700;
-    font-size: 1.125rem;
-    text-transform: uppercase;
+    gap: 0.5rem;
 }
 
-/* Кнопка выхода */
-.logout-btn {
-    color: #64748b; /* slate-500 */
-    cursor: pointer;
-    background: transparent;
-    border: none;
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+.nav-links a,
+.nav-login {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
     transition: color 0.2s ease;
 }
 
-.logout-btn:hover {
-    color: #f87171; /* red-400 */
+.nav-links a:hover,
+.nav-login:hover {
+    color: #fff;
 }
 
-/* Выпадающее мобильное меню */
-.mobile-menu {
-    background-color: rgba(2, 6, 23, 0.95);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-bottom: 1px solid #1e293b;
-    padding: 1rem 1.5rem;
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+/* --- HERO SECTION --- */
+.hero {
+    max-width: 1200px;
+    margin: 8rem auto 4rem;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    min-height: 70vh;
+}
+
+.badge {
+    display: inline-block;
+    background: rgba(255, 153, 0, 0.1);
+    color: #ff9900;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+.title {
+    font-size: 4rem;
+    line-height: 1.1;
+    color: #fff;
+    margin-bottom: 1.5rem;
+    letter-spacing: -1px;
+}
+
+.highlight {
+    color: var(--accent-hover);
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
+    max-width: 90%;
+}
+
+/* --- BUTTONS --- */
+.cta-group {
+    display: flex;
+    gap: 1rem;
+}
+
+.btn {
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s ease;
+    border: none;
+    font-size: 1rem;
+}
+
+.btn-sm {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    background: #fff;
+    color: #000;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.btn-sm:hover {
+    background: #e2e8f0;
+}
+
+.btn-primary {
+    background-color: var(--accent-color);
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: var(--accent-hover);
+    box-shadow: 0 0 15px var(--glow-color);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-secondary:hover {
+    border-color: #fff;
+}
+
+/* --- VISUALS (Commit Graph Vibe) --- */
+.hero-visual {
+    position: relative;
+    padding: 2rem;
+    background: #161b22;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.commit-graph {
+    display: grid;
+    grid-template-columns: repeat(14, 1fr);
+    gap: 6px;
+    position: relative;
+    z-index: 2;
+}
+
+.commit-box {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 4px;
+    background-color: #21262d;
+    transition: 0.3s ease;
+}
+
+.commit-box:hover {
+    transform: scale(1.2);
+}
+
+.glow-effect {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 80%;
+    background: var(--glow-color);
+    filter: blur(60px);
+    z-index: 1;
+    border-radius: 50%;
+    pointer-events: none;
 }

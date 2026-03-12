@@ -1,74 +1,30 @@
 {% load static %}
-<link rel="stylesheet" href="{% static 'css/navbar.css' %}">
-
-<nav class="navbar-glass fixed w-full z-50 top-0 border-b border-slate-800" id="navbar">
-    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-        
-        <a href="{% url 'home' %}" class="text-2xl font-black tracking-tighter text-white hover:opacity-80 transition">
-            Mind<span class="text-blue-500">.</span>TRACKER
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="{% url 'home' %}" class="nav-logo">
+            <span class="logo-icon">🧠</span> MindTracker
         </a>
-
-        <div class="hidden md:flex items-center space-x-6 text-sm font-medium">
+        
+        <ul class="nav-links">
+            <li><a href="#features">Фичи</a></li>
+            <li><a href="#stats">Статистика</a></li>
+            <li><a href="#community">Комьюнити</a></li>
+        </ul>
+        
+        <div class="nav-actions">
             {% if user.is_authenticated %}
-                <a href="{% url 'stats' %}" class="text-slate-400 hover:text-white transition">Дашборд</a>
-                <a href="{% url 'checkup' %}" class="text-slate-400 hover:text-white transition">Чекап</a>
-
-                <div class="flex items-center gap-4 pl-6 border-l border-slate-800 ml-2">
-                    <span class="text-slate-300">{{ user.username }}</span>
-                    
-                    <a href="{% url 'stats' %}" class="avatar-container">
-                        {% if user.avatar %}
-                            <img src="{{ user.avatar.url }}" alt="Аватар" class="avatar-img">
-                        {% else %}
-                            <div class="avatar-placeholder">
-                                {{ user.username|make_list|first }}
-                            </div>
-                        {% endif %}
-                    </a>
-
-                    <form method="post" action="{% url 'logout' %}" class="m-0 p-0 flex items-center">
-                        {% csrf_token %}
-                        <button type="submit" class="logout-btn" title="Выйти">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
-                        </button>
-                    </form>
-                </div>
-            {% else %}
-                <a href="{% url 'login' %}" class="text-slate-400 hover:text-white transition">Вход</a>
-                <a href="{% url 'register' %}" class="px-5 py-2 rounded-full border border-slate-700 hover:bg-slate-800 text-white transition">Регистрация</a>
-            {% endif %}
-        </div>
-
-        <button class="md:hidden text-slate-400 hover:text-white focus:outline-none" id="mobile-btn">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-        </button>
-    </div>
-
-    <div class="mobile-menu hidden" id="mobile-menu">
-        <div class="flex flex-col space-y-4">
-            {% if user.is_authenticated %}
-                <div class="flex items-center gap-3 pb-4 border-b border-slate-800">
-                    <div class="avatar-container">
-                        {% if user.avatar %}
-                            <img src="{{ user.avatar.url }}" alt="Аватар" class="avatar-img">
-                        {% else %}
-                            <div class="avatar-placeholder">{{ user.username|make_list|first }}</div>
-                        {% endif %}
-                    </div>
-                    <span class="text-white font-medium">{{ user.username }}</span>
-                </div>
-                <a href="{% url 'stats' %}" class="text-slate-400 hover:text-white">Дашборд</a>
-                <a href="{% url 'checkup' %}" class="text-slate-400 hover:text-white">Чекап</a>
-                <form method="post" action="{% url 'logout' %}" class="pt-2">
+                <span style="color: var(--text-secondary); margin-right: 15px;">Привет, {{ user.username }}!</span>
+                <a href="{% url 'stats' %}" class="nav-login">Мой трекер</a>
+                
+                <form action="{% url 'logout' %}" method="post" style="display: inline;">
                     {% csrf_token %}
-                    <button type="submit" class="text-red-400 hover:text-red-300 font-medium text-left w-full">Выйти из аккаунта</button>
+                    <button type="submit" class="btn-sm" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #fff;">Выйти</button>
                 </form>
+
             {% else %}
-                <a href="{% url 'login' %}" class="text-slate-400 hover:text-white">Вход</a>
-                <a href="{% url 'register' %}" class="text-blue-500 font-medium hover:text-blue-400">Регистрация</a>
+                <a href="{% url 'login' %}" class="nav-login">Войти</a>
+                <a href="{% url 'register' %}" class="btn-sm" style="text-decoration: none; display: inline-block; line-height: normal;">Регистрация</a>
             {% endif %}
         </div>
     </div>
 </nav>
-
-<script src="{% static 'js/navbar.js' %}"></script>
