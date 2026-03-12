@@ -17,3 +17,11 @@ class DailyLogAdmin(admin.ModelAdmin):
     @admin.display(description="Количество символов в заметках", ordering="notes")
     def count_chars(self, daily_log: DailyLog) -> str:
         return f"{len(daily_log.notes)} символов"
+
+
+@admin.register(User)
+class UserAdmin(admin.ModelAdmin):
+    list_display = ("id", "username", "first_name", "last_name", "email", "is_staff")
+    list_display_links = ("username",)
+    ordering = ["id"]
+    search_fields = ["username", "first_name"]

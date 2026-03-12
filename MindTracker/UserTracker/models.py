@@ -50,3 +50,4 @@ class DailyLog(models.Model):
     class Meta:
         verbose_name = "Дневные коммиты"
         verbose_name_plural = "Дневные коммиты"
+        
