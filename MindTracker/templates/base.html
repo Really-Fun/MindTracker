@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>{% block title %}{{ title|default:"MindTracker" }}{% endblock %}</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="bg-[#0d1117] text-slate-200 font-['Inter'] min-h-screen flex flex-col selection:bg-blue-500/30">
+
+    {% include 'includes/navbar.html' %}
+
+    <main class="flex-grow pt-24 pb-12 px-6">
+        <div class="max-w-4xl mx-auto w-full">
+            {% block content %}
+            {% endblock content %}
+        </div>
+    </main>
+
+    <footer class="p-8 text-center text-slate-600 text-sm glass border-t border-white/5 mt-auto">
+        Mind & Muscle Tracker &copy; {% now "Y" %}<br>
+        <span class="text-[10px]">Бэкенд: Django | Состояние: Recovery</span>
+    </footer>
+
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>

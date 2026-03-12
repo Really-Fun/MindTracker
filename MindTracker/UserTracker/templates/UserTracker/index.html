@@ -1,117 +1,103 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }}</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body { background-color: #0f172a; color: #f8fafc; font-family: 'Inter', sans-serif; }
-        .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
-        .gradient-text { background: linear-gradient(90deg, #3b82f6, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    </style>
-</head>
-<body class="min-h-screen flex flex-col">
-    {% include 'navbar.html' %}
-    {% comment %} <nav class="p-6 flex justify-between items-center glass sticky top-0 z-50">
-        <div class="text-xl font-bold gradient-text">Mind Tracker</div>
-        <div class="flex gap-4">
-            <span class="text-sm text-slate-400">Привет, {{ user.username }}</span>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Мой трекер | MindTracker{% endblock %}
+
+{% block content %}
+    <section class="mb-10 animate-fade-in-up">
+        <h2 class="text-4xl font-extrabold mb-2">Привет, {{ user.username }}! 👋</h2>
+        <p class="text-slate-400 text-lg">Как твоё настроение сегодня? Давай не ломать стрик.</p>
+    </section>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+        <div class="glass p-6 rounded-3xl text-center transform hover:-translate-y-1 transition-all duration-300">
+            <p class="text-slate-500 text-xs uppercase mb-1 font-semibold tracking-wider">Дней в строю</p>
+            <p class="text-4xl font-extrabold text-blue-400 drop-shadow-[0_0_10px_rgba(96,165,250,0.5)]">{{ days_in_row }}</p>
         </div>
-    </nav> {% endcomment %}
-
-    <main class="flex-grow p-6 md:p-12 max-w-4xl mx-auto w-full">
-        <section class="mb-10">
-            <h2 class="text-4xl font-extrabold mb-2">Привет, {{user.username}}! 👋</h2>
-            <p class="text-slate-400 text-lg">Как твоё настроение сегодня?</p>
-        </section>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-            <div class="glass p-6 rounded-3xl text-center">
-                <p class="text-slate-500 text-xs uppercase mb-1">Дней в строю</p>
-                <p class="text-3xl font-bold text-blue-400">{{days_in_row}}</p>
-            </div>
-            <div class="glass p-6 rounded-3xl text-center border-l-4 border-l-purple-500">
-                <p class="text-slate-500 text-xs uppercase mb-1">Ср. настроение</p>
-                <p class="text-3xl font-bold text-purple-400">{{average_mood|floatformat:2}}</p>
-            </div>
-            <div class="glass p-6 rounded-3xl text-center">
-                <p class="text-slate-500 text-xs uppercase mb-1">Магний</p>
-                <p class="text-3xl font-bold text-green-400">{{magnesium_in_percent}}%</p>
-            </div>
+        <div class="glass p-6 rounded-3xl text-center border-l-4 border-l-purple-500 transform hover:-translate-y-1 transition-all duration-300 relative overflow-hidden">
+            <div class="absolute inset-0 bg-purple-500/5 blur-xl"></div>
+            <p class="text-slate-500 text-xs uppercase mb-1 font-semibold tracking-wider relative z-10">Ср. настроение</p>
+            <p class="text-4xl font-extrabold text-purple-400 drop-shadow-[0_0_10px_rgba(192,132,252,0.5)] relative z-10">{{ average_mood|floatformat:2 }}</p>
         </div>
-
-        <div class="mb-12">
-            <a href="{% url 'checkup' %}" class="block w-full py-5 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-center text-xl font-bold rounded-3xl shadow-2xl shadow-blue-500/20 transition-all transform hover:-translate-y-1 active:scale-95">
-                🚀 Сделать Daily Check-up
-            </a>
+        <div class="glass p-6 rounded-3xl text-center transform hover:-translate-y-1 transition-all duration-300">
+            <p class="text-slate-500 text-xs uppercase mb-1 font-semibold tracking-wider">Магний</p>
+            <p class="text-4xl font-extrabold text-green-400 drop-shadow-[0_0_10px_rgba(74,222,128,0.5)]">{{ magnesium_in_percent }}%</p>
         </div>
+    </div>
 
-        <section>
-            <h3 class="text-xl font-semibold mb-6 flex items-center gap-2">
-                Последние логи
-                <span class="px-2 py-1 bg-slate-800 text-[10px] rounded-full text-slate-400">История</span>
-            </h3>
+    <div class="mb-12 animate-fade-in-up" style="animation-delay: 0.1s;">
+        <a href="{% url 'checkup' %}" class="block w-full py-5 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-center text-xl font-bold rounded-3xl shadow-[0_0_30px_rgba(96,165,250,0.3)] transition-all transform hover:-translate-y-1 active:scale-95 border border-white/10">
+            🚀 Сделать Daily Check-up
+        </a>
+    </div>
 
+    <section class="animate-fade-in-up" style="animation-delay: 0.2s;">
+        <h3 class="text-xl font-semibold mb-6 flex items-center gap-3">
+            Последние коммиты
+            <span class="px-3 py-1 bg-slate-800 border border-slate-700 text-xs rounded-full text-slate-300">История</span>
+        </h3>
+
+        <div class="space-y-4 mb-8">
             {% for commit in object_list %}
-                <div class="space-y-4 mb-4"> <a href="{% url 'commit' commit.slug %}" class="block transform transition-all hover:-translate-y-1 hover:scale-[1.01] active:scale-95">
-                        <div class="glass p-5 rounded-2xl flex justify-between items-center hover:border-blue-500/50 hover:shadow-lg hover:shadow-blue-500/10 transition-all">
-                            <div>
-                                <p class="font-medium text-slate-200">{{ commit.date }}</p>
-                                <p class="text-sm text-slate-500 italic truncate max-w-[200px] md:max-w-md">
-                                    {{ commit.notes|default:"No message for this commit" }}
-                                </p>
-                            </div>
-                            <div class="text-right">
-                                <span class="text-blue-400 font-bold">{{ commit.mood }}/10</span>
-                                <p class="text-[10px] text-slate-600 uppercase tracking-wider">Mood score</p>
-                            </div>
+                <a href="{% url 'commit' commit.slug %}" class="block group">
+                    <div class="glass p-5 rounded-2xl flex justify-between items-center transition-all duration-300 group-hover:border-blue-500/50 group-hover:bg-slate-800/50 group-hover:shadow-[0_0_20px_rgba(96,165,250,0.15)] group-hover:-translate-y-1">
+                        <div>
+                            <p class="font-medium text-slate-200 mb-1 flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full {% if commit.mood >= 7 %}bg-green-500{% elif commit.mood >= 4 %}bg-yellow-500{% else %}bg-red-500{% endif %}"></span>
+                                {{ commit.date }}
+                            </p>
+                            <p class="text-sm text-slate-400 italic truncate max-w-[200px] md:max-w-md">
+                                {{ commit.notes|default:"Нет описания. Просто сделал дело." }}
+                            </p>
                         </div>
-                    </a>
-                </div>
+                        <div class="text-right">
+                            <span class="text-2xl font-bold {% if commit.mood >= 7 %}text-green-400{% elif commit.mood >= 4 %}text-yellow-400{% else %}text-red-400{% endif %}">
+                                {{ commit.mood }}/10
+                            </span>
+                        </div>
+                    </div>
+                </a>
             {% empty %}
-                <p class="text-slate-500 text-center py-10">Пока нет ни одного коммита. Самое время сделать первый!</p>
+                <div class="glass p-10 rounded-3xl text-center border-dashed border-2 border-slate-700">
+                    <span class="text-4xl mb-4 block">📭</span>
+                    <p class="text-slate-400 text-lg">Пока нет ни одного лога. Самое время закоммитить свой первый день!</p>
+                </div>
             {% endfor %}
-            {% if is_paginated %}
-            <div class="flex justify-center items-center gap-4 mt-8">
-                
-                {% if page_obj.has_previous %}
-                    <a href="?page={{ page_obj.previous_page_number }}" class="glass px-4 py-2 rounded-xl text-sm text-slate-300 hover:text-white hover:border-blue-500 transition-all">
-                        &larr; Предыдущая
-                    </a>
-                {% else %}
-                {% endif %}
+        </div>
 
-                <span class="text-slate-400 text-sm font-medium">
-                    Стр. <span class="text-blue-400">{{ page_obj.number }}</span> из {{ page_obj.paginator.num_pages }}
-                </span>
-
-                {% if page_obj.has_next %}
-                    <a href="?page={{ page_obj.next_page_number }}" class="glass px-4 py-2 rounded-xl text-sm text-slate-300 hover:text-white hover:border-blue-500 transition-all">
-                        Следующая &rarr;
-                    </a>
-                {% else %}
-                {% endif %}
-
-            </div>
+        {% if is_paginated %}
+        <div class="flex justify-center items-center gap-4 mt-8">
+            {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}" class="glass px-5 py-2.5 rounded-xl text-sm font-medium text-slate-300 hover:text-white hover:border-blue-500 transition-all">
+                    &larr; Назад
+                </a>
             {% endif %}
-        </section>
-    </main>
 
-    <footer class="p-8 text-center text-slate-600 text-sm">
-        Mind & Muscle Tracker &copy; 2026<br>
-        <span class="text-[10px]">Бэкенд: Django | Состояние: Recovery</span>
-    </footer>
+            <span class="glass px-4 py-2 rounded-xl text-slate-400 text-sm font-medium border-none bg-slate-800/50">
+                Стр. <span class="text-blue-400">{{ page_obj.number }}</span> из {{ page_obj.paginator.num_pages }}
+            </span>
 
-    <script>
-        // Можно добавить анимацию появления карточек
-        document.querySelectorAll('.glass').forEach((el, i) => {
-            el.style.opacity = 0;
-            setTimeout(() => {
-                el.style.transition = "all 0.5s ease";
-                el.style.opacity = 1;
-            }, i * 100);
-        });
-    </script>
-</body>
-</html>
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" class="glass px-5 py-2.5 rounded-xl text-sm font-medium text-slate-300 hover:text-white hover:border-blue-500 transition-all">
+                    Дальше &rarr;
+                </a>
+            {% endif %}
+        </div>
+        {% endif %}
+    </section>
+{% endblock content %}
+
+{% block extra_scripts %}
+<script>
+    // Плавное появление карточек логов (оставил твою идею, но сделал через селектор .group)
+    document.querySelectorAll('.group').forEach((el, i) => {
+        el.style.opacity = 0;
+        el.style.transform = "translateY(10px)";
+        setTimeout(() => {
+            el.style.transition = "all 0.5s cubic-bezier(0.4, 0, 0.2, 1)";
+            el.style.opacity = 1;
+            el.style.transform = "translateY(0)";
+        }, (i * 100) + 300); // Задержка, чтобы сначала появился заголовок
+    });
+</script>
+{% endblock %}

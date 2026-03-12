@@ -1,59 +1,21 @@
-<!DOCTYPE html>
-{% load static %}
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mind Tracker | Восстанови свой код и тело</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
-    <style>
-        body { background-color: #020617; color: #f8fafc; font-family: 'Inter', sans-serif; overflow-x: hidden; }
-        .hero-glow { position: absolute; top: -10%; left: 50%; transform: translateX(-50%); width: 600px; height: 400px; background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%); z-index: -1; }
-        .btn-primary { background: #3b82f6; transition: all 0.3s ease; box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
-        .btn-primary:hover { background: #2563eb; transform: translateY(-2px); box-shadow: 0 0 30px rgba(59, 130, 246, 0.5); }
-    </style>
-</head>
-<body class="min-h-screen flex flex-col">
-    <div class="hero-glow"></div>
-    {% include 'navbar.html' %}
+{% extends 'base.html' %}
 
-    <nav class="container mx-auto p-6 flex justify-between items-center">
-        <div class="text-2xl font-black tracking-tighter text-white">Mind<span class="text-blue-500">.</span>TRACKER</div>
-        <div class="space-x-6 text-sm font-medium">
-            {% if user.is_authenticated %}
-            <a href={% url "stats" %} class="profile-btn">Профиль</a>
-            {% else %}
-            <a href="{% url 'login' %}" class="text-slate-400 hover:text-white transition">Вход</a>
-            <a href="{% url 'register' %}" class="px-5 py-2 rounded-full border border-slate-700 hover:bg-slate-800 transition">Регистрация</a>
-            {% endif %}
+{% block content %}
+<section class="hero">
+    <div class="hero-content">
+        <div class="badge">🔥 14 дней в ударе</div>
+        <h1 class="title">Формируй привычки.<br><span class="highlight">Не ломай стрик.</span></h1>
+        <p class="subtitle">Трекай свой прогресс, коммить каждый день и развивайся без выгорания. Твоя жизнь — твой лучший проект.</p>
+        <div class="cta-group">
+            <button class="btn btn-primary">Начать трекинг</button>
+            <button class="btn btn-secondary">Узнать больше</button>
         </div>
-    </nav>
-
-    <main class="container mx-auto flex-grow flex flex-col items-center justify-center px-6 text-center">
-        <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6">
-            Кодь лучше.<br><span class="text-blue-500">Восстанавливайся быстрее.</span>
-        </h1>
-        <p class="max-w-2xl text-slate-400 text-lg md:text-xl mb-10 leading-relaxed">
-            Трекер для разработчиков, которые ценят свой бэкенд так же, как свой позвоночник. 
-            Магний, сон, код и дисциплина в одном месте.
-        </p>
-
-        <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-            <a href="{% url 'register' %}" class="btn-primary px-10 py-4 rounded-2xl font-bold text-lg">Начать бесплатно</a>
-            <a href="#about" class="px-10 py-4 rounded-2xl bg-slate-900 border border-slate-800 hover:bg-slate-800 transition font-bold text-lg">Узнать больше</a>
-        </div>
-
-        <div class="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 opacity-40 grayscale hover:grayscale-0 transition duration-700">
-            <div class="flex flex-col items-center"><span class="text-xs uppercase tracking-widest text-slate-500">Python</span></div>
-            <div class="flex flex-col items-center"><span class="text-xs uppercase tracking-widest text-slate-500">Django</span></div>
-            <div class="flex flex-col items-center"><span class="text-xs uppercase tracking-widest text-slate-500">PostgreSQL</span></div>
-            <div class="flex flex-col items-center"><span class="text-xs uppercase tracking-widest text-slate-500">Mental Health</span></div>
-        </div>
-    </main>
-
-    <footer class="container mx-auto p-10 border-t border-slate-900 text-center text-slate-600 text-xs">
-        <p>Спроектировано для тех, кто хочет попробовать самоконтроль.</p>
     </div>
-</body>
-</html>
+
+    <div class="hero-visual">
+        <div class="commit-graph" id="commitGraph">
+            </div>
+        <div class="glow-effect"></div>
+    </div>
+</section>
+{% endblock %}
