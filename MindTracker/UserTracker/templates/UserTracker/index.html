@@ -26,7 +26,7 @@
     </div>
 
     <div class="mb-12 animate-fade-in-up" style="animation-delay: 0.1s;">
-        <a href="{% url 'checkup' %}" class="block w-full py-5 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-center text-xl font-bold rounded-3xl shadow-[0_0_30px_rgba(96,165,250,0.3)] transition-all transform hover:-translate-y-1 active:scale-95 border border-white/10">
+        <a href="{% url 'profile:checkup' %}" class="block w-full py-5 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-center text-xl font-bold rounded-3xl shadow-[0_0_30px_rgba(96,165,250,0.3)] transition-all transform hover:-translate-y-1 active:scale-95 border border-white/10">
             🚀 Сделать Daily Check-up
         </a>
     </div>
@@ -39,7 +39,7 @@
 
         <div class="space-y-4 mb-8">
             {% for commit in object_list %}
-                <a href="{% url 'commit' commit.slug %}" class="block group">
+                <a href="{% url 'profile:commit' commit.slug %}" class="block group">
                     <div class="glass p-5 rounded-2xl flex justify-between items-center transition-all duration-300 group-hover:border-blue-500/50 group-hover:bg-slate-800/50 group-hover:shadow-[0_0_20px_rgba(96,165,250,0.15)] group-hover:-translate-y-1">
                         <div>
                             <p class="font-medium text-slate-200 mb-1 flex items-center gap-2">

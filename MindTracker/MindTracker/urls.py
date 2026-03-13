@@ -4,9 +4,11 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 import UserTracker.urls
+import Profile.urls
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("profile/", include(Profile.urls), ),
     path("", include(UserTracker.urls)),
 ]
 

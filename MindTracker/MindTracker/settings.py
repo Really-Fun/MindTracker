@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "UserTracker",
+    "Profile",
 ]
 
 MIDDLEWARE = [
@@ -122,8 +123,8 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
-AUTH_USER_MODEL = "UserTracker.User"
+AUTH_USER_MODEL = "Profile.User"
 
 LOGIN_URL = "login"
-LOGIN_REDIRECT_URL = "stats"
+LOGIN_REDIRECT_URL = "profile:stats"
 LOGOUT_REDIRECT_URL = "home"
