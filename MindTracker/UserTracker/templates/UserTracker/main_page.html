@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
-
-{% block content %}
+{% load static %} {% block content %}
 <section class="hero">
     <div class="hero-content">
         <div class="badge">🔥 14 дней в ударе</div>
@@ -13,9 +12,12 @@
     </div>
 
     <div class="hero-visual">
-        <div class="commit-graph" id="commitGraph">
-            </div>
+        <div class="commit-graph" id="commitGraph"></div>
         <div class="glow-effect"></div>
     </div>
 </section>
+{% endblock %}
+
+{% block extra_scripts %}
+    <script src="{% static 'js/app.js' %}"></script>
 {% endblock %}
