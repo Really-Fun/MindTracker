@@ -225,3 +225,40 @@ body {
         opacity: 1;
     }
 }
+
+/* Эффект матового стекла */
+.glass {
+    background: rgba(30, 41, 59, 0.4);
+    /* Полупрозрачный slate-800 */
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Красивый градиентный текст */
+.gradient-text {
+    background: linear-gradient(to right, #60a5fa, #c084fc);
+    /* от blue-400 к purple-400 */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Кастомные анимации появления (подхватываются в HTML) */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in-up {
+    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+    /* Скрываем до начала анимации */
+}
