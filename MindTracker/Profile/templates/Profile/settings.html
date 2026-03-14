@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Настройки профиля | MindTracker{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto bg-[#161b22] p-8 rounded-xl border border-white/10 shadow-lg mt-8">
+    <div class="mb-8 border-b border-white/10 pb-4">
+        <h1 class="text-2xl font-bold text-white">Настройки профиля</h1>
+        <p class="text-slate-400 text-sm mt-1">Обнови свои личные данные и предпочтения.</p>
+    </div>
+
+    <form method="post" enctype="multipart/form-data" class="space-y-6">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+            <div class="bg-red-500/10 border border-red-500/50 text-red-400 p-4 rounded-lg text-sm">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
+        {% for field in form %}
+            <div class="flex flex-col gap-2">
+                <label for="{{ field.id_for_label }}" class="text-sm font-medium text-slate-300">
+                    {{ field.label }}
+                </label>
+
+                <div class="form-input-wrapper">
+                    {{ field }}
+                </div>
+
+                {% if field.help_text %}
+                    <p class="text-xs text-slate-500">{{ field.help_text|safe }}</p>
+                {% endif %}
+
+                {% if field.errors %}
+                    <p class="text-sm text-red-400">{{ field.errors|striptags }}</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <div class="pt-6 flex items-center justify-end gap-4 border-t border-white/10 mt-8">
+            <a href="/" class="px-5 py-2.5 text-sm font-medium text-slate-300 bg-transparent border border-slate-600 rounded-lg hover:bg-slate-800 hover:text-white transition-colors">
+                Отмена
+            </a>
+            <button type="submit" class="px-5 py-2.5 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-500 transition-colors shadow-lg shadow-blue-500/20">
+                Сохранить изменения
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock content %}
+
+{% block extra_head %}
+<style>
+    /* Django рендерит обычные <input>, которые без классов в Tailwind выглядят не очень. 
+       Стилизуем их глобально для этого блока */
+    .form-input-wrapper input,
+    .form-input-wrapper textarea,
+    .form-input-wrapper select {
+        width: 100%;
+        background-color: #0d1117;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #e2e8f0;
+        padding: 0.5rem 0.75rem;
+        border-radius: 0.5rem;
+        outline: none;
+        transition: border-color 0.2s;
+    }
+    .form-input-wrapper input:focus,
+    .form-input-wrapper textarea:focus {
+        border-color: #3b82f6; /* Tailwind blue-500 */
+        box-shadow: 0 0 0 1px #3b82f6;
+    }
+</style>
+{% endblock %}

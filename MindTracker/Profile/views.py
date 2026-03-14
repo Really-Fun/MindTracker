@@ -1,9 +1,10 @@
 from datetime import date, timedelta
 
-from django.views.generic import CreateView, ListView, DetailView
+from django.views.generic import CreateView, ListView, DetailView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.db.models import Avg
+from django.contrib.auth import get_user_model
 
 from Profile.models import DailyLog
 
@@ -73,3 +74,15 @@ class IndexView(LoginRequiredMixin, ListView):
         context["magnesium_in_percent"] = magnesium_percent
 
         return context
+
+
+class ProfileSettings(LoginRequiredMixin, UpdateView):
+    model = get_user_model()
+    template_name = "Profile/settings.html"
+    fields = ["username", "first_name", "avatar"]
+
+    def get_success_url(self):
+        return reverse_lazy("profile:stats")
+
+    def get_object(self, queryset=None):
+        return self.request.user
