@@ -5,8 +5,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.db.models import Avg
 from django.contrib.auth import get_user_model
+from rest_framework import generics
 
 from Profile.models import DailyLog
+from .serizlizers import CommitsSerializer
 
 
 class DailyCheckUp(LoginRequiredMixin, CreateView):
@@ -86,3 +88,10 @@ class ProfileSettings(LoginRequiredMixin, UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.user
+
+
+class CommitsAPIView(generics.ListAPIView):
+    serializer_class = CommitsSerializer
+
+    def get_queryset(self):
+        return DailyLog.objects.filter(user=self.request.user).order_by("-date")

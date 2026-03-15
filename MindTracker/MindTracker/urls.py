@@ -5,11 +5,13 @@ from django.conf import settings
 
 import UserTracker.urls
 import Profile.urls
+from Profile.views import CommitsAPIView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("profile/", include(Profile.urls), ),
+    path("profile/", include(Profile.urls)),
     path("", include(UserTracker.urls)),
+    path("api/v1/womenlist/", CommitsAPIView.as_view()),
 ]
 
 if settings.DEBUG:

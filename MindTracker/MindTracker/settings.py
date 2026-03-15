@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "UserTracker",
     "Profile",
+    "rest_framework",
 ]
 
 MIDDLEWARE = [
