@@ -1,3 +1,4 @@
+from django.conf.urls import handler404
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
@@ -6,6 +7,7 @@ from django.conf import settings
 import UserTracker.urls
 import Profile.urls
 from Profile.views import CommitsAPIView
+from UserTracker.views import custom_404_view
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -19,3 +21,6 @@ if settings.DEBUG:
 
 admin.site.site_header = "Администрирование сайта MindTracker"
 admin.site.index_title = "Привилегии"
+
+
+handler404 = custom_404_view

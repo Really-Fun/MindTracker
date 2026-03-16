@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-mi65x=e73j^(&fnc=*%3y(v&elahi@7g@y+q89ae3215z=k@wb
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 
 
 # Application definition
@@ -125,6 +125,8 @@ STATICFILES_DIRS = [
 ]
 
 AUTH_USER_MODEL = "Profile.User"
+
+MEDIA_URL = "/media/"
 
 LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = "profile:stats"

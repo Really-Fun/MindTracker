@@ -2,6 +2,7 @@ from django.views.generic import TemplateView, CreateView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.forms import AuthenticationForm
 from django.urls import reverse_lazy
+from django.shortcuts import render
 
 from UserTracker.forms import RegistrationUserForm
 
@@ -31,3 +32,7 @@ class RegisterUserView(CreateView):
 
     def get_success_url(self):
         return reverse_lazy("profile:stats")
+
+
+def custom_404_view(request, exception=None):
+    return render(request, "404.html", status=404)
