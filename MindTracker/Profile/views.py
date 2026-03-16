@@ -1,6 +1,12 @@
 from datetime import date, timedelta
 
-from django.views.generic import CreateView, ListView, DetailView, UpdateView
+from django.views.generic import (
+    CreateView,
+    ListView,
+    DetailView,
+    UpdateView,
+    TemplateView,
+)
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.db.models import Avg
@@ -90,7 +96,26 @@ class ProfileSettings(LoginRequiredMixin, UpdateView):
         return self.request.user
 
 
-class CommitsAPIView(generics.ListAPIView):
+class BestCommitView(LoginRequiredMixin, DetailView):
+    template_name = "UserTracker/commit_detail.html"
+    model = DailyLog
+    context_object_name = "commit"
+
+    def get_object(self, queryset=None):
+        best_commit = (
+            self.model.objects.filter(user=self.request.user)
+            .order_by("-mood", "-date")
+            .first()
+        )
+
+        if not best_commit:
+            pass
+            # TODO do a 404 page and reverse_lazy to 404 page
+
+        return best_commit
+
+
+class CommitsAPIView(LoginRequiredMixin, generics.ListAPIView):
     serializer_class = CommitsSerializer
 
     def get_queryset(self):

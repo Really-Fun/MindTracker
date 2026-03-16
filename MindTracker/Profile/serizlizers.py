@@ -5,4 +5,4 @@ from .models import DailyLog
 class CommitsSerializer(serializers.ModelSerializer):
     class Meta:
         model = DailyLog
-        fields = ("user", "mood", "slug", "notes")
+        fields = ("user", "mood", "slug", "notes", "")
