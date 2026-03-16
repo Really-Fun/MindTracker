@@ -22,5 +22,4 @@ if settings.DEBUG:
 admin.site.site_header = "Администрирование сайта MindTracker"
 admin.site.index_title = "Привилегии"
 
-
 handler404 = custom_404_view

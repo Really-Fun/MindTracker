@@ -1,5 +1,6 @@
 from datetime import date, timedelta
 
+from django.http import Http404
 from django.views.generic import (
     CreateView,
     ListView,
@@ -104,13 +105,14 @@ class BestCommitView(LoginRequiredMixin, DetailView):
     def get_object(self, queryset=None):
         best_commit = (
             self.model.objects.filter(user=self.request.user)
-            .order_by("-mood", "-date")
+            .order_by("-mood", "-took_magnesium", "-date")
             .first()
         )
 
         if not best_commit:
-            pass
-            # TODO do a 404 page and reverse_lazy to 404 page
+            raise Http404(
+                "У вас пока нет ни одного лога. Ваш лучший коммит еще впереди!"
+            )
 
         return best_commit
 
