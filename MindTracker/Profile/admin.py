@@ -25,3 +25,8 @@ class UserAdmin(admin.ModelAdmin):
     list_display_links = ("username",)
     ordering = ["id"]
     search_fields = ["username", "first_name"]
+
+    @admin.display(description="Валидная почта", ordering="email")
+    def valid_email(self, user: User) -> str:
+        return f"'"
+        # TODO valid email
