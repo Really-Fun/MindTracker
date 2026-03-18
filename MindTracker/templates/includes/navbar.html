@@ -1,12 +1,12 @@
 <nav class="navbar">
     <div class="nav-container">
-        <a href="/" class="nav-logo">
+        <a href={% url 'home' %} class="nav-logo">
             <span class="logo-icon">🧠</span> MindTracker
         </a>
         
         <ul class="nav-links">
-            <li><a href="#features">Фичи</a></li>
-            <li><a href="#stats">Статистика</a></li>
+            <li><a href="#app">Приложение</a></li>
+            <li><a href={% url 'profile:stats' %}>Статистика</a></li>
             <li><a href="#community">Комьюнити</a></li>
         </ul>
         
