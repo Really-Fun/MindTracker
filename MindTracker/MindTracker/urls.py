@@ -6,14 +6,15 @@ from django.conf import settings
 
 import UserTracker.urls
 import Profile.urls
-from Profile.views import CommitsAPIView
+from Profile.views import CommitsAPIView, UserInfoAPIView
 from UserTracker.views import custom_404_view
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("profile/", include(Profile.urls)),
     path("", include(UserTracker.urls)),
-    path("api/v1/womenlist/", CommitsAPIView.as_view()),
+    path("api/v1/my-commits/", CommitsAPIView.as_view()),
+    path("api/v1/my-user/", UserInfoAPIView.as_view()),
 ]
 
 if settings.DEBUG:

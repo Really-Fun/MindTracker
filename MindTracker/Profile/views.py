@@ -15,7 +15,7 @@ from django.contrib.auth import get_user_model
 from rest_framework import generics
 
 from Profile.models import DailyLog
-from .serizlizers import CommitsSerializer
+from .serizlizers import CommitsSerializer, UserSerializer
 
 
 class DailyCheckUp(LoginRequiredMixin, CreateView):
@@ -122,3 +122,10 @@ class CommitsAPIView(LoginRequiredMixin, generics.ListAPIView):
 
     def get_queryset(self):
         return DailyLog.objects.filter(user=self.request.user).order_by("-date")
+
+
+class UserInfoAPIView(LoginRequiredMixin, generics.ListAPIView):
+    serializer_class = UserSerializer
+
+    def get_queryset(self):
+        return get_user_model().objects.filter(id=self.request.user.id)
